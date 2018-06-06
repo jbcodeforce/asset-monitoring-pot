@@ -11,4 +11,6 @@ public interface AssetRepository extends CassandraRepository<Asset, Long> {
 	@Query(value="SELECT * FROM assetmonitoring.assets")
 	public List<Asset> getAssets();
 
+	@Query(value="SELECT * FROM assetmonitoring.assets where ")
+	public List<Asset> getAssetsByOS(String os);
 }
