@@ -1,7 +1,5 @@
 package ibm.caset.pot.assetmt;
 
-import java.net.InetAddress;
-
 import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 
@@ -14,7 +12,7 @@ import ibm.caset.pot.assetmt.model.Asset;
 
 /**
  * Test writing and reading assets to cassandra
- * @author jeromeboyer
+ * @author jerome boyer
  *
  */
 public class CassandraWriter {
@@ -25,7 +23,7 @@ public class CassandraWriter {
 	 public static void main(String[] args) { 
 	 
 	  try { 
-		   cluster = Cluster.builder().addContactPoints(InetAddress.getLoopbackAddress()).build();  
+		   cluster = Cluster.builder().addContactPoints("localhost").build();  
 		   session = cluster.connect("assetmonitoring"); 
 		   CassandraOperations cassandraOps = new CassandraTemplate(session); 
 		   cassandraOps.insert(new Asset(1,"IOS", "iphone" )); 
@@ -35,7 +33,8 @@ public class CassandraWriter {
 		   System.out.println("Asset read:"+ a.getOs()); 
 	 
 	       // cassandraOps.truncate("assets"); 
-	 
+		   session.close();
+		   cluster.close();
 	  } catch (Exception e) { 
 	      e.printStackTrace(); 
 	  } 
